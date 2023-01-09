@@ -168,7 +168,7 @@ function stripApacheLicense() {
   // Closure Compiler preserves dozens of Apache licences in the Blockly code.
   // Remove these if they belong to Google or MIT.
   // MIT's permission to do this is logged in Blockly issue #2412.
-  return gulp.replace(new RegExp(licenseRegex, "g"), '\n\n\n\n');
+  return gulp.replace(new RegExp(licenseRegex, 'g'), '\n\n\n\n');
   // Replace with the same number of lines so that source-maps are not affected.
 }
 
@@ -289,25 +289,6 @@ const JSCOMP_OFF = [
 ];
 
 /**
- * The npm prepare script, run by npm install after installing modules
- * and as part of the packaging process.
- *
- * This does just enough of the build that npm start should work.
- *
- * Exception: when running in the CI environment, we don't build
- * anything.  We don't need to, because npm test will build everything
- * needed, and we don't want to, because a tsc error would prevent
- * other workflows (like lint and format) from completing.
- */
-function prepare(done) {
-  if (process.env.CI) {
-    done();
-    return;
-  }
-  return exports.deps(done);
-}
-
-/**
  * Builds Blockly as a JS program, by running tsc on all the files in
  * the core directory.
  */
@@ -406,7 +387,7 @@ function generateMessages(done) {
       --input_file ${path.join('msg', 'messages.js')} \
       --output_dir ${path.join('msg', 'json')} \
       --quiet`;
-  execSync(jsToJsonCmd, { stdio: 'inherit' });
+  execSync(jsToJsonCmd, {stdio: 'inherit'});
 
   console.log(`
 Regenerated several flies in msg/json/.  Now run
@@ -610,7 +591,7 @@ function getChunkOptions() {
 /**
  * RegExp that globally matches path.sep (i.e., "/" or "\").
  */
-const pathSepRegExp = new RegExp(path.sep.replace(/\\/, '\\\\'), "g");
+const pathSepRegExp = new RegExp(path.sep.replace(/\\/, '\\\\'), 'g');
 
 /**
  * Helper method for calling the Closure Compiler, establishing
@@ -760,7 +741,6 @@ exports.minify = gulp.series(exports.deps, buildCompiled);
 exports.build = gulp.parallel(exports.minify, exports.langfiles);
 
 // Manually-invokable targets, with prequisites where required.
-exports.prepare = prepare;
 exports.format = format;
 exports.messages = generateMessages;  // Generate msg/json/en.json et al.
 exports.buildAdvancedCompilationTest =

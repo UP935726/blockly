@@ -155,7 +155,7 @@ export class Mutator extends Icon {
    *
    * @param e Mouse click event.
    */
-  protected override iconClick_(e: MouseEvent) {
+  protected override iconClick_(e: PointerEvent) {
     if (this.getBlock().isEditable()) {
       super.iconClick_(e);
     }
@@ -317,8 +317,6 @@ export class Mutator extends Icon {
       return;
     }
     const block = this.getBlock();
-    eventUtils.fire(new (eventUtils.get(eventUtils.BUBBLE_OPEN))(
-        block, visible, 'mutator'));
     if (visible) {
       // Create the bubble.
       this.bubble_ = new Bubble(
@@ -390,6 +388,8 @@ export class Mutator extends Icon {
         this.sourceListener = null;
       }
     }
+    eventUtils.fire(new (eventUtils.get(eventUtils.BUBBLE_OPEN))(
+        block, visible, 'mutator'));
   }
 
   /**
