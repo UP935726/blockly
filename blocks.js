@@ -6,33 +6,15 @@ Blockly.Blocks['dummy'] = {
   }
 };
 
+//Get the string length
 Blockly.Blocks['string_length'] = {
   init: function() {
     this.appendValueInput('VALUE')
         .setCheck('String')
         .appendField('length of');
     this.setOutput(true, 'Number');
-    this.setColour(160);
+    this.setColour(60);
     this.setTooltip('Returns number of letters in the provided text.');
-  }
-};
-
-//If statement
-Blockly.Blocks['if_statement'] = {
-  init: function() {
-    this.appendValueInput("if")
-        .setCheck("Boolean")
-        .setAlign(Blockly.ALIGN_RIGHT)
-        .appendField("If");
-    this.appendStatementInput("do")
-        .setCheck(null)
-        .setAlign(Blockly.ALIGN_RIGHT)
-        .appendField("do");
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(230);
- this.setTooltip("");
- this.setHelpUrl("");
   }
 };
 
@@ -41,7 +23,6 @@ Blockly.Blocks['print_statement'] = {
   init: function() {
     this.appendValueInput("userInput")
         .setCheck("String")
-        .setAlign(Blockly.ALIGN_RIGHT)
         .appendField("print");
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
@@ -52,14 +33,57 @@ Blockly.Blocks['print_statement'] = {
   }
 };
 
+//String input from user
+Blockly.Blocks['text'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("\"")
+        .appendField(new Blockly.FieldTextInput("default"), "user_input")
+        .appendField("\"");
+    this.setInputsInline(true);
+    this.setOutput(true, "String");
+    this.setColour(60);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
+
+//Convert number to string
+Blockly.Blocks['num_to_string'] = {
+  init: function() {
+    this.appendValueInput("VALUE")
+        .setCheck("Number")
+    this.appendDummyInput()
+        .appendField(".toString()");
+    this.setInputsInline(true);
+    this.setOutput(true, "String");
+    this.setColour(230);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
+
+
+//Number input from user
+Blockly.Blocks['number'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldNumber(0), "VALUE");
+    this.setOutput(true, "Number");
+    this.setColour(330);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
+
 //Simple maths function
 Blockly.Blocks['simple_maths'] = {
   init: function() {
-    this.appendValueInput("first_value")
+    this.appendValueInput("first_input")
         .setCheck("Number");
     this.appendDummyInput()
-        .appendField(new Blockly.FieldDropdown([["+","addition"], ["-","subtraction"], ["*","multiplication"], ["/","division"], ["^","power"]]), "maths");
-    this.appendValueInput("second_value")
+        .appendField(new Blockly.FieldDropdown([["+","addition"], ["-","subtraction"], ["*","multiplication"], ["/","division"], ["^","power"]]), "NAME");
+    this.appendValueInput("second_input")
         .setCheck("Number");
     this.setInputsInline(true);
     this.setOutput(true, "Number");
@@ -69,18 +93,27 @@ Blockly.Blocks['simple_maths'] = {
   }
 };
 
-//Number input from user
-Blockly.Blocks['number'] = {
+//If statement
+Blockly.Blocks['if_statement'] = {
   init: function() {
+    this.appendValueInput("if")
+        .setCheck("Boolean")
+        .setAlign(Blockly.ALIGN_RIGHT)
+        .appendField("If (");
     this.appendDummyInput()
-        .appendField(new Blockly.FieldNumber(0), "NAME");
-    this.setOutput(true, "Number");
-    this.setColour(330);
+        .appendField(")");
+    this.appendStatementInput("do")
+        .setCheck("statement")
+        .setAlign(Blockly.ALIGN_RIGHT)
+        .appendField("do");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(230);
  this.setTooltip("");
  this.setHelpUrl("");
   }
 };
-
 
 //Block to call a variable
 Blockly.Blocks['variable'] = {
@@ -90,6 +123,41 @@ Blockly.Blocks['variable'] = {
     this.setInputsInline(false);
     this.setOutput(true, null);
     this.setColour(230);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
+
+//Compare two inputs
+Blockly.Blocks['compare'] = {
+  init: function() {
+    this.appendValueInput("first_input")
+        .setCheck(null);
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldDropdown([["=","equal"], ["!=","not_equal"], [">","greater"], [">=","greater_or_equal"], ["<","less"], ["<=","less_or_equal"]]), "sign");
+    this.appendValueInput("second_input")
+        .setCheck(null);
+    this.setInputsInline(true);
+    this.setOutput(true, "Boolean");
+    this.setColour(230);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
+
+//Compound statement block
+Blockly.Blocks['compound_statement'] = {
+  init: function() {
+    this.appendDummyInput()
+        .setAlign(Blockly.ALIGN_RIGHT)
+        .appendField("{");
+    this.appendStatementInput("compound")
+        .setCheck(null);
+    this.appendDummyInput()
+        .setAlign(Blockly.ALIGN_RIGHT)
+        .appendField("}");
+    this.setPreviousStatement(true, null);
+    this.setColour(260);
  this.setTooltip("");
  this.setHelpUrl("");
   }

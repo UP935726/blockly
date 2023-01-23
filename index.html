@@ -4,7 +4,11 @@
   <meta charset="utf-8">
   <title>Blockly Demo: Resizable Blockly (Part 2)</title>
   <script src="node_modules/blockly/blockly_compressed.js"></script>
+  <script src="node_modules/blockly/javascript_compressed.js"></script>
+  <!-- Custom blocks -->
   <script src="blocks.js"></script>
+  <!-- Code generators for the custom blocks -->
+  <script src="generator.js"></script>
   <script src="node_modules/blockly/msg/en.js"></script>
   <style>
     html, body {
@@ -34,12 +38,13 @@
     <tr>
       <td>
         <p>
-          Once an <a href="index.html">area is defined</a>, Blockly can be
-          injected and positioned over the area.
-          A resize handler keeps it in position as the page changes.
+          Matthew Christopher Hawkins - Project
         </p>
 
-        <p>&rarr; More info on <a href="https://developers.google.com/blockly/guides/configure/web/resizable">injecting resizable Blockly</a>&hellip;</p>
+        <p>
+          <button onclick="showCode()">Show JavaScript</button>
+          <button onclick="runCode()">Run JavaScript</button>
+        </p>
       </td>
     </tr>
     <tr>
@@ -63,6 +68,48 @@
               {
                 "kind": "block",
                 "type": "if_statement"
+              },
+              {
+                "kind": "block",
+                "type": "compound_statement"
+              }
+            ]
+          },
+          {
+            "kind": "category",
+            "name":"Text",
+            "categorystyle":"text_category",
+            "contents":[
+              {
+                "kind": "block",
+                "type": "print_statement"
+              },
+              {
+                "kind": "block",
+                "type": "string_length"
+              },
+              {
+                "kind": "block",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "kind": "category",
+            "name":"Maths",
+            "categorystyle":"math_category",
+            "contents":[
+              {
+                "kind": "block",
+                "type": "simple_maths"
+              },
+              {
+                "kind": "block",
+                "type": "compare"
+              },
+              {
+                "kind": "block",
+                "type": "number"
               }
             ]
           },
@@ -77,19 +124,7 @@
               },
               {
                 "kind": "block",
-                "type": "string_length"
-              },
-              {
-                "kind": "block",
-                "type": "print_statement"
-              },
-              {
-                "kind": "block",
-                "type": "simple_maths"
-              },
-              {
-                "kind": "block",
-                "type": "number"
+                "type": "num_to_string"
               }
             ]
           },
@@ -104,9 +139,29 @@
 
     var blocklyArea = document.getElementById('blocklyArea');
     var blocklyDiv = document.getElementById('blocklyDiv');
+
     var demoWorkspace = Blockly.inject(blocklyDiv,
-        {media: 'https://unpkg.com/blockly/media/',
-         toolbox: toolbox});
+        {toolbox : toolbox, 
+        collapse : true, 
+        comments : true, 
+        disable : false, 
+        maxBlocks : Infinity, 
+        trashcan : true, 
+        horizontalLayout : false, 
+        toolboxPosition : 'start', 
+        css : true, 
+        media : 'https://unpkg.com/blockly/media/', 
+        rtl : false, 
+        scrollbars : true, 
+        sounds : true, 
+        oneBasedIndex : true, 
+        grid : {
+          spacing : 20, 
+          length : 1, 
+          colour : '#888', 
+          snap : true}
+        });
+
     var onresize = function(e) {
       // Compute the absolute coordinates and dimensions of blocklyArea.
       var element = blocklyArea;
@@ -128,6 +183,27 @@
     };
     window.addEventListener('resize', onresize, false);
     onresize();
+
+    function showCode() {
+      // Generate JavaScript code and display it.
+      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+      var code = Blockly.JavaScript.workspaceToCode(demoWorkspace);
+      alert(code);
+    }
+
+    function runCode() {
+      // Generate JavaScript code and run it.
+      window.LoopTrap = 1000;
+      Blockly.JavaScript.INFINITE_LOOP_TRAP =
+          'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+      var code = Blockly.JavaScript.workspaceToCode(demoWorkspace);
+      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+      try {
+        eval(code);
+      } catch (e) {
+        alert(e);
+      }
+    }
   </script>
 </body>
 </html>
