@@ -18,50 +18,45 @@
     body {
       background-color: #fff;
       font-family: sans-serif;
-      overflow: hidden;
+      overflow: scroll;
     }
     h1 {
       font-weight: normal;
       font-size: 140%;
     }
-    table {
-      height: 100%;
-      width: 100%;
+    .column {
+      float: left;
+      padding: 5px;
     }
-    #blocklyArea {
-      height: 99%;
+    .row::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+    textarea {
+      width: 600px;
+      height: 600px;
+      vertical-align: top;
+      overflow: scroll;
     }
   </style>
 </head>
 <body>
- <table>
-    <tr>
-      <td>
-        <p>
-          Matthew Christopher Hawkins - Project
-        </p>
-
-        <p>
-          <button onclick="showCode()">Show JavaScript</button>
-          <button onclick="runCode()">Run JavaScript</button>
-        </p>
-      </td>
-    </tr>
-    <tr>
-      <td id="blocklyArea">
-      </td>
-    </tr>
-    <tr>
-      <td id="outputPane">
-        <pre id="generatedCode"><code></code></pre>
-        <div id="output"></div>
-      </td>
-    </tr>
-
-
-  </table>
-
-  <div id="blocklyDiv" style="position: absolute"></div>
+  <div class="row">
+    <p>
+      Matthew Christopher Hawkins - Project
+    </p>
+    <p>
+      <button onclick="showCode()">Show JavaScript</button>
+      <button onclick="runCode()">Run JavaScript</button>
+    </p>
+    <div class = "column">
+      <div id="blocklyDiv" style="height: 600px; width: 800px;"></div>
+    </div>
+    <div class = "column">
+      <textarea type="text" id="code_output" value="" readonly></textarea>
+    </div>
+  </div>
 
   <script>
     //REMEMBER TO ADD ALL NEW BLOCKS TO THE TOOL BOX <------------------
@@ -145,10 +140,6 @@
         ]
       };
 
-    var blocklyArea = document.getElementById('blocklyArea');
-    var blocklyDiv = document.getElementById('blocklyDiv');
-    var codeDiv = document.getElementById('generatedCode').firstChild;
-
     var demoWorkspace = Blockly.inject(blocklyDiv,
         {toolbox : toolbox, 
         collapse : true, 
@@ -170,36 +161,14 @@
           colour : '#888', 
           snap : true}
         });
-
-    var onresize = function(e) {
-      // Compute the absolute coordinates and dimensions of blocklyArea.
-      var element = blocklyArea;
-      var x = 0;
-      var y = 0;
-      do {
-        x += element.offsetLeft;
-        y += element.offsetTop;
-        element = element.offsetParent;
-      } while (element);
-      // Position blocklyDiv over blocklyArea.
-      blocklyDiv.style.left = x + 'px';
-      blocklyDiv.style.top = y + 'px';
-      blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
-      blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
-      Blockly.svgResize(demoWorkspace);
-
-      console.log('resize');
-    };
-    window.addEventListener('resize', onresize, false);
-    onresize();
+    //var codeDiv = document.getElementById('code_output').firstChild;
 
     function showCode() {
       // Generate JavaScript code and display it.
       Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
       var code = Blockly.JavaScript.workspaceToCode(demoWorkspace);
-      alert(code);
-      codeDiv.innerText = code;
-
+      // alert(code);
+      document.getElementById("code_output").value = code;
     }
 
     function runCode() {

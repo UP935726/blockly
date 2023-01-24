@@ -134,7 +134,7 @@ Blockly.Blocks['compare'] = {
     this.appendValueInput("first_input")
         .setCheck(null);
     this.appendDummyInput()
-        .appendField(new Blockly.FieldDropdown([["=","equal"], ["!=","not_equal"], [">","greater"], [">=","greater_or_equal"], ["<","less"], ["<=","less_or_equal"]]), "sign");
+        .appendField(new Blockly.FieldDropdown([["=","equal"], ["!=","not_equal"], [">=","greater_equal"], ["<=","lesser_equal"], [">","greater"], ["<","lesser"]]), "comparison");
     this.appendValueInput("second_input")
         .setCheck(null);
     this.setInputsInline(true);

@@ -42,8 +42,6 @@ Blockly.JavaScript['number'] = function(block) {
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
 
-//[["+","addition"], ["-","subtraction"], ["*","multiplication"], ["/","division"], ["^","power"]]), "NAME");
-
 //Simple maths function
 Blockly.JavaScript['simple_maths'] = function(block) {
   var value_first_input = Blockly.JavaScript.valueToCode(block, 'first_input', Blockly.JavaScript.ORDER_ATOMIC);
@@ -70,14 +68,41 @@ Blockly.JavaScript['simple_maths'] = function(block) {
 
 //If statement
 Blockly.JavaScript['if_statement'] = function(block) {
+  var value_statement_input = Blockly.JavaScript.valueToCode(block, 'statement_input', Blockly.JavaScript.ORDER_ATOMIC);
+  var statements_statement_output = Blockly.JavaScript.statementToCode(block, 'statement_output');
   // TODO: Assemble JavaScript into code variable.
-  var code = '...;\n';
+  var code = 'if(' + value_statement_input +'){' + statements_statement_output + '};\n';
   return code;
 };
 
 //Block to call a variable
 
 //Compare two inputs
+Blockly.JavaScript['compare'] = function(block) {
+  var value_first_input = Blockly.JavaScript.valueToCode(block, 'first_input', Blockly.JavaScript.ORDER_ATOMIC);
+  var dropdown_comparison = block.getFieldValue('comparison');
+  var value_second_input = Blockly.JavaScript.valueToCode(block, 'second_input', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = '...';
+  if (dropdown_comparison == "equal") {
+    code = value_first_input + '==' + value_second_input;
+  } else if (dropdown_comparison == "doesnt_equal"){
+    code = value_first_input + '!=' + value_second_input;
+  } else if (dropdown_comparison == "greater_equal"){
+    code = value_first_input + '>=' + value_second_input;
+  } else if (dropdown_comparison == "lesser_equal"){
+    code = value_first_input + '<=' + value_second_input;
+  } else if (dropdown_comparison == "greater"){
+    code = value_first_input + '>' + value_second_input;
+  } else if (dropdown_comparison == "lesser"){
+    code = value_first_input + '<' + value_second_input;
+  };
+
+
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
 
 //Compound statement block
 Blockly.JavaScript['compound_statement'] = function(block) {
