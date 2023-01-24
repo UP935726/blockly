@@ -108,7 +108,6 @@ Blockly.JavaScript['compare'] = function(block) {
 Blockly.JavaScript['compound_statement'] = function(block) {
   var statements_compound = Blockly.JavaScript.statementToCode(block, 'compound');
   // TODO: Assemble JavaScript into code variable.
-  var code = statements_compound;
+  var code = '{\n\t' + statements_compound + '\n};';
   return code;
 };
-

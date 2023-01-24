@@ -96,13 +96,13 @@ Blockly.Blocks['simple_maths'] = {
 //If statement
 Blockly.Blocks['if_statement'] = {
   init: function() {
-    this.appendValueInput("if")
+    this.appendValueInput("statement_input")
         .setCheck("Boolean")
         .setAlign(Blockly.ALIGN_RIGHT)
         .appendField("If (");
     this.appendDummyInput()
         .appendField(")");
-    this.appendStatementInput("do")
+    this.appendStatementInput("statement_output")
         .setCheck("statement")
         .setAlign(Blockly.ALIGN_RIGHT)
         .appendField("do");
@@ -160,5 +160,28 @@ Blockly.Blocks['compound_statement'] = {
     this.setColour(260);
  this.setTooltip("");
  this.setHelpUrl("");
+  }
+};
+
+// Block for variable getter.
+Blockly.Blocks['variables_get'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldVariable("VAR"), "FIELD_NAME");
+    this.setOutput(true, null);
+    this.setColour(350);
+  }
+};
+
+// Block for variable setter.
+Blockly.Blocks['variables_set'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField("set")
+        .appendField(new Blockly.FieldVariable("VAR"), "FIELD_NAME")
+        .appendField("to");
+    this.setOutput(true, null);
+    this.setColour(350);
   }
 };

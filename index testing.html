@@ -135,7 +135,21 @@
             "kind":"category",
             "name":"Variables",
             "categorystyle":"variable_category",
-            "custom":"VARIABLE"
+            "contents":[
+              {
+                "kind": "button",
+                "text": "A button",
+                "callbackKey": "myFirstButtonPressed"
+              },
+              {
+                "kind": "block",
+                "type": "variables_get"
+              },
+              {
+                "kind": "block",
+                "type": "variables_set"
+              }
+            ]
           }
         ]
       };
@@ -162,6 +176,10 @@
           snap : true}
         });
     //var codeDiv = document.getElementById('code_output').firstChild;
+
+    demoWorkspace.registerButtonCallback('myFirstButtonPressed', function(button) {
+      Blockly.Variables.createVariableButtonHandler(button.getTargetWorkspace(), null, 'String');
+    });
 
     function showCode() {
       // Generate JavaScript code and display it.
