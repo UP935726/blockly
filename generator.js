@@ -111,3 +111,12 @@ Blockly.JavaScript['compound_statement'] = function(block) {
   var code = '{\n\t' + statements_compound + '\n};';
   return code;
 };
+
+// Block for variable getter.
+Blockly.JavaScript['variable_get'] = function(block) {
+  var value_variable = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ATOMIC);
+  var code = value_variable;
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+// Block for variable setter.

@@ -1,3 +1,6 @@
+//Need to fix variable code
+//Try to get mutator to work on if statements 
+
 Blockly.Blocks['dummy'] = {
   init: function() {
     this.appendDummyInput()
