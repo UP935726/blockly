@@ -49,6 +49,7 @@
     <p>
       <button onclick="showCode()">Show JavaScript</button>
       <button onclick="runCode()">Run JavaScript</button>
+      <button onclick="getAllVariables()">Show all variables</button>
     </p>
     <div class = "column">
       <div id="blocklyDiv" style="height: 600px; width: 800px;"></div>
@@ -66,11 +67,11 @@
           {
             "kind": "category",
             "name":"Logic",
-            "categorystyle":"logic_category",
+            "colour":"260",
             "contents":[
               {
                 "kind": "block",
-                "type": "if_statement"
+                "type": "if_statement",
               },
               {
                 "kind": "block",
@@ -81,7 +82,7 @@
           {
             "kind": "category",
             "name":"Text",
-            "categorystyle":"text_category",
+            "colour":"60",
             "contents":[
               {
                 "kind": "block",
@@ -94,13 +95,17 @@
               {
                 "kind": "block",
                 "type": "text"
+              },
+              {
+                "kind": "block",
+                "type": "num_to_string"
               }
             ]
           },
           {
             "kind": "category",
             "name":"Maths",
-            "categorystyle":"math_category",
+            "colour":"300",
             "contents":[
               {
                 "kind": "block",
@@ -113,41 +118,60 @@
               {
                 "kind": "block",
                 "type": "number"
+              },
+              {
+                "kind": "block",
+                "type": "boolean_output"
               }
             ]
           },
           {
             "kind": "category",
-            "name":"Everything else",
-            "categorystyle":"math_category",
+            "name": "Lists and Arrays",
+            "colour": "180",
             "contents":[
               {
                 "kind": "block",
-                "type": "dummy"
+                "type": "declare_array"
+              }
+            ]
+          },
+          {
+            "kind": "category",
+            "name":"Loops",
+            "colour":"120 ",
+            "contents":[
+              {
+                "kind": "block",
+                "type": "for_loop"
               },
               {
                 "kind": "block",
-                "type": "num_to_string"
+                "type": "while_loop"
+              },
+              {
+                "kind": "block",
+                "type": "break"
               }
             ]
           },
           {
             "kind":"category",
             "name":"Variables",
-            "categorystyle":"variable_category",
+            "colour":"350",
             "contents":[
               {
                 "kind": "button",
-                "text": "A button",
+                "text": "Create a new variable",
                 "callbackKey": "myFirstButtonPressed"
               },
               {
                 "kind": "block",
-                "type": "variables_get"
+                "type": "variable_getter"
               },
               {
                 "kind": "block",
-                "type": "variables_set"
+                "type": "variable_setter"
               }
             ]
           }
@@ -202,6 +226,13 @@
         alert(e);
       }
     }
+
+    function getAllVariables() {
+      var code = Blockly.Workspace.getAllVariables();
+      console.log(code);
+    }
+
+
   </script>
 
 </body>

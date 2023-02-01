@@ -1,8 +1,3 @@
-//Dummy block
-Blockly.JavaScript['dummy'] = function(block) {
-  return '';
-};
-
 //Get the string length
 Blockly.JavaScript['string_length'] = function(block) {
   var value_string_length = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ATOMIC);
@@ -68,10 +63,10 @@ Blockly.JavaScript['simple_maths'] = function(block) {
 
 //If statement
 Blockly.JavaScript['if_statement'] = function(block) {
-  var value_statement_input = Blockly.JavaScript.valueToCode(block, 'statement_input', Blockly.JavaScript.ORDER_ATOMIC);
-  var statements_statement_output = Blockly.JavaScript.statementToCode(block, 'statement_output');
+  var code_to_test = Blockly.JavaScript.valueToCode(block, 'statement_input', Blockly.JavaScript.ORDER_ATOMIC);
+  var statement = Blockly.JavaScript.statementToCode(block, 'statement_output');
   // TODO: Assemble JavaScript into code variable.
-  var code = 'if(' + value_statement_input +'){' + statements_statement_output + '};\n';
+  var code = 'if(' + code_to_test +'){\n' + statement + '};\n';
   return code;
 };
 
@@ -113,10 +108,98 @@ Blockly.JavaScript['compound_statement'] = function(block) {
 };
 
 // Block for variable getter.
-Blockly.JavaScript['variable_get'] = function(block) {
-  var value_variable = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ATOMIC);
+Blockly.JavaScript['variable_getter'] = function(block) {
+  var value_variable = Blockly.JavaScript.nameDB_.getName(block.getFieldValue('variable_input'), Blockly.Names.NameType.VARIABLE);
   var code = value_variable;
+  // TODO: Change ORDER_NONE to the correct strength.
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
 
 // Block for variable setter.
+Blockly.JavaScript['variable_setter'] = function(block) {
+  var value_variable = Blockly.JavaScript.nameDB_.getName(block.getFieldValue('variable_input'), Blockly.Names.NameType.VARIABLE);
+  var value_setting = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ATOMIC);
+  var code = value_variable + ' = ' + value_setting + ';\n';
+  return code;
+};
+
+//True or false
+Blockly.JavaScript['boolean_output'] = function(block) {
+  var dropdown_boolean = block.getFieldValue('boolean');
+  // TODO: Assemble JavaScript into code variable.
+  var code = '...';
+  if (dropdown_boolean == "true") {
+    code = 'true';
+  } else if (dropdown_boolean == "false"){
+    code = 'false';
+  }
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+//For loop
+Blockly.JavaScript['for_loop'] = function(block) {
+  var variable_input = Blockly.JavaScript.nameDB_.getName(block.getFieldValue('VARIABLE'), Blockly.Names.NameType.VARIABLE);
+  var value_first_input = Blockly.JavaScript.valueToCode(block, 'first_input', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_second_input = Blockly.JavaScript.valueToCode(block, 'second_input', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_third_input = Blockly.JavaScript.valueToCode(block, 'third_input', Blockly.JavaScript.ORDER_ATOMIC);
+  var statement_input = Blockly.JavaScript.statementToCode(block, 'statement_input');
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'for (' + variable_input + ' = ' + value_first_input + '; ' + variable_input + ' < ' + value_second_input + '; '
+              + variable_input + ' += ' + value_third_input + '){\n' + statement_input + '};\n';
+  return code;
+};
+
+//Example for loop code
+// for (let i = 0; i < cars.length; i++) {
+//   text += cars[i] + "<br>";
+// }
+
+//While loop
+
+Blockly.JavaScript['while_loop'] = function(block) {
+  var value_first_input = Blockly.JavaScript.valueToCode(block, 'first_input', Blockly.JavaScript.ORDER_ATOMIC);
+  var statement_input = Blockly.JavaScript.statementToCode(block, 'statement_input');
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'while (' + value_first_input + '){\n' + statement_input + '};\n';
+  return code;
+};
+
+//example while loop code
+// while (i < 10) {
+//   text += "The number is " + i;
+//   i++;
+// }
+
+//Break or continue
+Blockly.JavaScript['break'] = function(block) {
+  var dropdown_value = block.getFieldValue('first_input');
+  // TODO: Assemble JavaScript into code variable.
+  var code = '...;\n';
+  if (dropdown_value == "breakout") {
+    code = 'break;\n';
+  } else if (dropdown_value == "continue"){
+    code = 'continue;\n';
+  }
+  return code;
+};
+
+//Array
+Blockly.JavaScript['declare_array'] = function(block) {
+  var variable = Blockly.JavaScript.nameDB_.getName(block.getFieldValue('VARIABLE'), Blockly.Names.NameType.VARIABLE);
+  var type_choice = block.getFieldValue('type_choice');
+  var dimensions = block.getFieldValue('dimensions');
+  var num_of_items = block.getFieldValue('num_of_items');
+  // TODO: Assemble JavaScript into code variable.
+  var code = '...;\n';
+  var code = variable + ' = ' + 'new Array(' + dimensions + ');\n'
+  if (type_choice == "number"){
+    //code = variable + ' = [];\n' + 'for (let i = 1; i <= ' + dimensions + '; i++){\n' + variable + '.push(i);\n};\n';
+
+    code += 'for (let i = 1; i <= ' + dimensions + '; i++){\n\t' 
+      + variable + '[i] = new Array(' + num_of_items + ');\n'
+      + '};\n'
+    }
+  return code;
+};
+

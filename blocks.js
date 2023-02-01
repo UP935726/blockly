@@ -1,13 +1,4 @@
-//Need to fix variable code
 //Try to get mutator to work on if statements 
-
-Blockly.Blocks['dummy'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField('dummy block');
-    this.setColour(160);
-  }
-};
 
 //Get the string length
 Blockly.Blocks['string_length'] = {
@@ -60,7 +51,7 @@ Blockly.Blocks['num_to_string'] = {
         .appendField(".toString()");
     this.setInputsInline(true);
     this.setOutput(true, "String");
-    this.setColour(230);
+    this.setColour(60);
  this.setTooltip("");
  this.setHelpUrl("");
   }
@@ -73,7 +64,7 @@ Blockly.Blocks['number'] = {
     this.appendDummyInput()
         .appendField(new Blockly.FieldNumber(0), "VALUE");
     this.setOutput(true, "Number");
-    this.setColour(330);
+    this.setColour(300);
  this.setTooltip("");
  this.setHelpUrl("");
   }
@@ -90,7 +81,7 @@ Blockly.Blocks['simple_maths'] = {
         .setCheck("Number");
     this.setInputsInline(true);
     this.setOutput(true, "Number");
-    this.setColour(230);
+    this.setColour(300);
  this.setTooltip("");
  this.setHelpUrl("");
   }
@@ -112,10 +103,19 @@ Blockly.Blocks['if_statement'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(230);
+    this.setColour(260);
  this.setTooltip("");
  this.setHelpUrl("");
   }
+  // saveExtraState: function(){
+  //   return{
+  //     'itemCount' : this.itemCount_,
+  //   }
+  // },
+  // loadExtraState: function(state){
+  //   this.itemCount_ = state['itemCount'];
+  //   this.updateShape_();
+  // }
 };
 
 //Block to call a variable
@@ -142,7 +142,7 @@ Blockly.Blocks['compare'] = {
         .setCheck(null);
     this.setInputsInline(true);
     this.setOutput(true, "Boolean");
-    this.setColour(230);
+    this.setColour(300);
  this.setTooltip("");
  this.setHelpUrl("");
   }
@@ -161,30 +161,132 @@ Blockly.Blocks['compound_statement'] = {
         .appendField("}");
     this.setPreviousStatement(true, null);
     this.setColour(260);
- this.setTooltip("");
+ this.setTooltip("This block allows multiple statements to process as 1 statement.");
  this.setHelpUrl("");
   }
 };
 
 // Block for variable getter.
-Blockly.Blocks['variables_get'] = {
+Blockly.Blocks['variable_getter'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField(new Blockly.FieldVariable("VAR"), "FIELD_NAME");
+        .appendField(new Blockly.FieldVariable("Default"), "variable_input");
     this.setOutput(true, null);
     this.setColour(350);
   }
 };
 
 // Block for variable setter.
-Blockly.Blocks['variables_set'] = {
+Blockly.Blocks['variable_setter'] = {
   init: function() {
-    this.appendValueInput("NAME")
+    this.appendValueInput("VALUE")
         .setCheck(null)
         .appendField("set")
-        .appendField(new Blockly.FieldVariable("VAR"), "FIELD_NAME")
+        .appendField(new Blockly.FieldVariable("Default"), "variable_input")
         .appendField("to");
-    this.setOutput(true, null);
-    this.setColour(350);
+      this.setPreviousStatement(true, null);
+      this.setNextStatement(true, null);
+      this.setColour(350);
   }
 };
+
+//True or false
+Blockly.Blocks['boolean_output'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldDropdown([["True","true"], ["False","false"]]), "boolean");
+    this.setOutput(true, "Boolean");
+    this.setColour(300);
+ this.setTooltip("Returns the value true or false");
+ this.setHelpUrl("");
+  }
+};
+
+//For loop
+Blockly.Blocks['for_loop'] = {
+  init: function() {
+    this.appendValueInput("first_input")
+        .setCheck("Number")
+        .appendField("for (")
+        .appendField(new Blockly.FieldVariable("i"), "VARIABLE")
+        .appendField("=");
+    this.appendValueInput("second_input")
+        .setCheck("Number")
+        .appendField("to");
+    this.appendValueInput("third_input")
+        .setCheck("Number")
+        .appendField("by");
+    this.appendDummyInput()
+        .appendField(") {");
+    this.appendStatementInput("statement_input")
+        .setCheck(null);
+    this.appendDummyInput()
+        .setAlign(Blockly.ALIGN_RIGHT)
+        .appendField("{");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(120);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
+
+//While loop
+Blockly.Blocks['while_loop'] = {
+  init: function() {
+    this.appendValueInput("first_input")
+        .setCheck("Boolean")
+        .appendField("while (");
+    this.appendDummyInput()
+        .appendField(") {");
+    this.appendStatementInput("statement_input")
+        .setCheck(null);
+    this.appendDummyInput()
+        .setAlign(Blockly.ALIGN_RIGHT)
+        .appendField("}");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(120);
+ this.setTooltip("while loop");
+ this.setHelpUrl("");
+  }
+};
+
+//Break or continue
+Blockly.Blocks['break'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldDropdown([["breakout","breakout"], ["continue","continue"]]), "first_input");
+    this.setPreviousStatement(true, null);
+    this.setColour(120);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
+
+//Array
+Blockly.Blocks['declare_array'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Create the array")
+        .appendField(new Blockly.FieldVariable("Array"), "VARIABLE");
+    this.appendDummyInput()
+        .appendField("with type")
+        .appendField(new Blockly.FieldDropdown([["Number","number"], ["Boolean","boolean"], ["String","string"]]), "type_choice");
+    this.appendDummyInput()
+        .appendField("Dimensions")
+        .appendField(new Blockly.FieldNumber(0,0), "dimensions");
+    this.appendDummyInput()
+        .appendField("with items")
+        .appendField(new Blockly.FieldNumber(0,0), "num_of_items");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(180);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
+
