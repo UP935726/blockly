@@ -72,10 +72,6 @@
               {
                 "kind": "block",
                 "type": "if_statement",
-              },
-              {
-                "kind": "block",
-                "type": "compound_statement"
               }
             ]
           },
@@ -122,6 +118,14 @@
               {
                 "kind": "block",
                 "type": "boolean_output"
+              },
+              {
+                "kind": "block",
+                "type": "increment"
+              },
+              {
+                "kind": "block",
+                "type": "decrement"
               }
             ]
           },
@@ -156,6 +160,17 @@
             ]
           },
           {
+            "kind": "category",
+            "name": "Functions",
+            "colour": "240",
+            "contents":[
+              {
+                "kind": "button",
+                "text": "this does nothing"
+              }
+            ]
+          },
+          {
             "kind":"category",
             "name":"Variables",
             "colour":"350",
@@ -163,7 +178,7 @@
               {
                 "kind": "button",
                 "text": "Create a new variable",
-                "callbackKey": "myFirstButtonPressed"
+                "callbackKey": "variable_button"
               },
               {
                 "kind": "block",
@@ -172,6 +187,33 @@
               {
                 "kind": "block",
                 "type": "variable_setter"
+              },
+              {
+                "kind": "block",
+                "type": "let_equal"
+              },
+              {
+                "kind": "block",
+                "type": "variable"
+              }//,
+              // {
+              //   "kind": "block",
+              //   "type": "var"
+              // }
+            ]
+          },
+          {
+            "kind": "category",
+            "name": "Code building",
+            "colour": "43",
+            "contents":[
+              {
+                "kind": "block",
+                "type": "compound_statement"
+              },
+              {
+                "kind": "block",
+                "type": "expression_to_statement"
               }
             ]
           }
@@ -201,7 +243,7 @@
         });
     //var codeDiv = document.getElementById('code_output').firstChild;
 
-    demoWorkspace.registerButtonCallback('myFirstButtonPressed', function(button) {
+    demoWorkspace.registerButtonCallback('variable_button', function(button) {
       Blockly.Variables.createVariableButtonHandler(button.getTargetWorkspace(), null, 'String');
     });
 
@@ -231,6 +273,12 @@
       var code = Blockly.Workspace.getAllVariables();
       console.log(code);
     }
+
+    var startBlock = demoWorkspace.newBlock('start_code');
+    startBlock.setDeletable(false);
+    startBlock.setMovable(false);
+    startBlock.initSvg();
+    demoWorkspace.render();
 
 
   </script>
