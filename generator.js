@@ -81,7 +81,7 @@ Blockly.JavaScript['if_statement'] = function(block) {
     let branchCode = Blockly.JavaScript.statementToCode(block, 'else');
     code += ' else {\n' + branchCode + '}';
   }
-  return code + '\n';
+  return code + ';\n';
 };
 
 

@@ -106,26 +106,6 @@ Blockly.Blocks['simple_maths'] = {
 };
 
 //If statement
-// Blockly.Blocks['if_statement'] = {
-//   init: function() {
-//     this.appendValueInput("statement_input")
-//         .setCheck("Boolean")
-//         .setAlign(Blockly.ALIGN_RIGHT)
-//         .appendField("If (");
-//     this.appendDummyInput()
-//         .appendField(")");
-//     this.appendStatementInput("statement_output")
-//         .setCheck("statement")
-//     this.setInputsInline(true);
-//     this.setPreviousStatement(true, null);
-//     this.setNextStatement(true, null);
-//     this.setColour(260);
-//  this.setTooltip("");
-//  this.setHelpUrl("");
-//  }
-// };
-
-//Testing mutators
 Blockly.Blocks['if_statement'] = {
   init: function() {
     this.appendValueInput("if0")
@@ -351,7 +331,7 @@ Blockly.Blocks['variable_getter'] = {
 // Block for variable setter.
 Blockly.Blocks['variable_setter'] = {
   init: function() {
-    this.appendValueInput("first_input")
+    this.appendValueInput("VALUE")
         .setCheck(null)
         .appendField(new Blockly.FieldVariable("default"), "variable_input")
         .appendField("=");
